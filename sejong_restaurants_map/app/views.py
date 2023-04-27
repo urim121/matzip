@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect as r
-from .models import Curriculum, User
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from .models import restaurant
