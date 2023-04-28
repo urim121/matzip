@@ -57,6 +57,8 @@ def signout(request):
 
 def write(request):
   if request.method == 'POST':
+
+    category  = request.POST.get('category')
     title = request.POST.get('title')
     content = request.POST.get('content')
     
@@ -65,7 +67,7 @@ def write(request):
       # select * from user where email = ?
       user = User.objects.get(email=email)
       # insert into article (title, content, user_id) values (?, ?, ?)
-      article = Article(title=title, content=content, user=user)
+      article = Article(category=category , title=title, content=content, user=user)
       article.save()
       return render(request, 'write_success.html')
     except:
@@ -96,9 +98,11 @@ def update(request, id):
   if request.method == 'POST':
     title = request.POST.get('title')
     content = request.POST.get('content')
+    category  = request.POST.get('category')
     
     try:
       # update article set title = ?, content = ? where id = ?
+      article.category = category 
       article.title = title
       article.content = content
       article.save()

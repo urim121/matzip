@@ -21,3 +21,4 @@ class Article(models.Model):
   title = models.CharField(max_length=100)
   content = models.CharField(max_length=1000)
   user = models.ForeignKey(User, on_delete=models.CASCADE)
+  category = models.CharField(max_length=100, null=True) #게시판 카테고리 변수
