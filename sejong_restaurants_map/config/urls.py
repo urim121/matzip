@@ -16,8 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-import app.views
-import app.views as v
 from app import views
 
 
@@ -25,5 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("admin2/", admin.site.urls),
     path("main/", views.main),
+    path("category_data/", views.category_data),
     
 ]
