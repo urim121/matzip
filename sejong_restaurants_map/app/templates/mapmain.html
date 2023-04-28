@@ -8,7 +8,7 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
 .map_wrap, .map_wrap * {margin:0;padding:0;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:85%;}
-#menu_wrap {position:absolute;top:80px;left:0;bottom:0;width:250px; margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {position:absolute;top:80px;left:0;bottom:0;width:300px; margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap .option{text-align: center;}
 #menu_wrap .option p {margin:10px 0;}  
@@ -86,14 +86,14 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
     <form action="/main/" method="post">
         {% csrf_token %}
         <ul id="category">
-          <li><input type="hidden" name="category" value="korea">한식</li>
+          <li><input type="hidden" name="category" value="korean">한식</li>
           <li><input type="hidden" name="category" value="chinese">중식</li>
           <li><input type="hidden" name="category" value="japan">일식</li>
           <li><input type="hidden" name="category" value="wes">양식</li>
           <li><input type="hidden" name="category" value="meat">고기</li>
           <li><input type="hidden" name="category" value="caf">카페</li>
         </ul>
-        <input type="submit" value="전송">
+        <input type="submit">
       </form>
 
 
@@ -101,10 +101,15 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
     <script>
         var categories = document.querySelectorAll('#category li');
 for (var i = 0; i < categories.length; i++) {
-  categories[i].addEventListener('click', function() {
+  categories[i].addEventListener('click', (e) => {
     // 클릭된 카테고리의 ID와 data-order 속성 값을 출력합니다.
-    console.log('category ID:', this.id);
-    console.log('data-order:', this.dataset.order);
+    const category = e.target.childNodes[0].value;
+    console.log(category)
+    const data = fetch(`/category_data/?category=${category}`);
+    data.then(res => res.json()).then(res => {
+        console.log(res);
+    });
+
   });
 }
     </script>
@@ -112,7 +117,8 @@ for (var i = 0; i < categories.length; i++) {
     <div id="menu_wrap" class="bg_white">
         <div class="option">
         </div>
-        <ul id="placesList"></ul>
+        
+        <ul id="placesList"><h1>목록...</h1></ul>
         <div id="pagination"></div>
     </div>
 </div>
@@ -127,7 +133,7 @@ var mapContainer = document.getElementById('map'), // 지도 표시할 div
         level: 3
     };  
 
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
     
 // 지도타입 변경
 function setMapType(maptype) { 
@@ -192,10 +198,10 @@ function displayMarker(locPosition, message) {
         removable : iwRemoveable
     });
     
-    // 인포윈도우를 마커위에 표시
+    // 인포윈도우 마커위에 표시
     infowindow.open(map, marker);
     
-    // 지도 중심좌표를 접속위치로 변경
+    // 지도 중심좌표 접속위치로 변경
     map.setCenter(locPosition);      
 }   
 
@@ -258,18 +264,18 @@ function displayPlaces(places) {
 
     //??????????????????????????????????????????????????????????????????????
 
-    // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
-    // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
+    // 몇번째 카테고리가 선택되어 있는지 얻기
+    // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용
     var order = document.getElementById(currCategory).getAttribute('data-order');
 
 
     for ( var i=0; i<places.length; i++ ) {
 
-            // 마커를 생성하고 지도에 표시합니다
+            // 마커를 생성하고 지도에 표시
             var marker = addMarker(new kakao.maps.LatLng(places[i].y, places[i].x), order);
 
             // 마커와 검색결과 항목을 클릭 했을 때
-            // 장소정보를 표출하도록 클릭 이벤트를 등록합니다
+            // 장소정보를 표출하도록 클릭 이벤트를 등록
             (function(marker, place) {
                 kakao.maps.event.addListener(marker, 'click', function() {
                     displayPlaceInfo(place);
@@ -278,7 +284,7 @@ function displayPlaces(places) {
     }
 }
 
-// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+// 마커를 생성, 표시
 function addMarker(position, order) {
     var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', 
         imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
