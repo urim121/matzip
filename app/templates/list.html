@@ -1,0 +1,61 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>제목</th>
+          <th>작성자</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for article in article_list %}
+        <tr no={{ article.id }}>
+          <td>{{ article.id }}</td>
+          <td>{{ article.title }}</td>
+          <td>{{ article.user.name }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary center" onclick='location="/article/write/"'>
+      글쓰기
+    </button>
+  </div>
+</div>
+
+
+<script>
+  trs = document.querySelectorAll('tr')
+  for (tr of trs) {
+    tr.addEventListener('click', (e) => {
+      게시물번호 = e.currentTarget.getAttribute('no')
+      // alert(게시물번호)
+      location = `/article/detail/${게시물번호}/`
+    })
+  }
+</script>
+
+<style>
+  .btn-primary {
+
+    width: 60vw;
+    height: 40px;
+    font-weight: bold;
+
+  }
+
+  .center {
+    text-align: center;
+  }
+
+</style>
+
+{% endblock %}
