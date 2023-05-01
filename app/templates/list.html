@@ -3,6 +3,14 @@
 
 <div class="jumbotron">
   <div class="container text-center">
+    <div class="form-group">
+      <label for="category-select"></label>
+      <select class="form-control" id="category-select">
+        <option value="all">전체</option>
+        <option value="1">추천</option>
+        <option value="2">후기</option>
+      </select>
+    </div>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -11,10 +19,14 @@
           <th>작성자</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="article-list">
         {% for article in article_list %}
         <tr no={{ article.id }}>
-          <td>{{ article.id }}</td>
+          {% if article.category == '1' %}
+          <td>추천</td>
+          {% elif article.category == '2' %}
+          <td>후기</td>
+          {% endif %}
           <td>{{ article.title }}</td>
           <td>{{ article.user.name }}</td>
         </tr>
@@ -31,30 +43,53 @@
   </div>
 </div>
 
-
 <script>
-  trs = document.querySelectorAll('tr')
-  for (tr of trs) {
+  const articleList = document.getElementById('article-list')
+  const categorySelect = document.getElementById('category-select')
+
+  categorySelect.addEventListener('change', (e) => {
+    const selectedCategory = e.target.value
+    for (let i = 0; i < articleList.rows.length; i++) {
+      const row = articleList.rows[i]
+      const category = row.cells[0].innerText
+      if (selectedCategory === 'all') {
+        row.style.display = ''
+      } else if (category === '추천' && selectedCategory === '1') {
+        row.style.display = ''
+      } else if (category === '후기' && selectedCategory === '2') {
+        row.style.display = ''
+      } else {
+        row.style.display = 'none'
+      }
+    }
+  })
+
+  const trs = document.querySelectorAll('tr')
+  for (const tr of trs) {
     tr.addEventListener('click', (e) => {
-      게시물번호 = e.currentTarget.getAttribute('no')
-      // alert(게시물번호)
-      location = `/article/detail/${게시물번호}/`
+      const articleNo = e.currentTarget.getAttribute('no')
+      location = `/article/detail/${articleNo}/`
     })
   }
 </script>
 
 <style>
   .btn-primary {
-
     width: 60vw;
     height: 40px;
     font-weight: bold;
-
   }
 
   .center {
     text-align: center;
   }
+
+  th {
+    text-align: center;
+  }
+.form-control {
+  width: 10%
+}
 
 </style>
 

@@ -31,6 +31,5 @@ urlpatterns = [
     path('article/update/<int:id>/', views.update),
     path('article/delete/<int:id>/', views.delete),
 
-    # path("matzip/", views.matzip),
     
 ]

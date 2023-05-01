@@ -81,7 +81,7 @@ def list(request):
   context = { 
     'article_list' : article_list 
   }
-  return render(request, 'list.html', context)
+  return render(request, 'list.html', context,)
 
 def detail(request, id):
   # select * from article where id = ?
@@ -123,3 +123,18 @@ def delete(request, id):
     return render(request, 'delete_success.html')
   except:
     return render(request, 'delete_fail.html')
+  
+def article_list(request):
+    category = request.GET.get('category', 'all')  # 기본값은 'all'
+    
+    if category == 'all':
+        article_list = Article.objects.all()
+    elif category == '1':
+        article_list = Article.objects.filter(category='1')
+    elif category == '2':
+        article_list = Article.objects.filter(category='2')
+    else:
+        article_list = Article.objects.all()  # 잘못된 쿼리 파라미터일 경우 기본값으로 모든 게시물 보여줌
+        
+    context = {'article_list': article_list, 'category': category}
+    return render(request, 'article_list.html', context)
