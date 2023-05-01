@@ -81,7 +81,7 @@ def list(request):
   context = { 
     'article_list' : article_list 
   }
-  return render(request, 'list.html', context,)
+  return render(request, 'list.html', context)
 
 def detail(request, id):
   # select * from article where id = ?
