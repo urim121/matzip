@@ -43,6 +43,7 @@
   </div>
 </div>
 
+<<<<<<< HEAD
 <script>
   const articleList = document.getElementById('article-list')
   const categorySelect = document.getElementById('category-select')
@@ -69,21 +70,40 @@
     tr.addEventListener('click', (e) => {
       const articleNo = e.currentTarget.getAttribute('no')
       location = `/article/detail/${articleNo}/`
+=======
+
+<script>
+  trs = document.querySelectorAll('tr')
+  for (tr of trs) {
+    tr.addEventListener('click', (e) => {
+      게시물번호 = e.currentTarget.getAttribute('no')
+      // alert(게시물번호)
+      location = `/article/detail/${게시물번호}/`
+>>>>>>> de09abed45384dcf40c3069957f556909fafc583
     })
   }
 </script>
 
 <style>
   .btn-primary {
+<<<<<<< HEAD
     width: 60vw;
     height: 40px;
     font-weight: bold;
+=======
+
+    width: 60vw;
+    height: 40px;
+    font-weight: bold;
+
+>>>>>>> de09abed45384dcf40c3069957f556909fafc583
   }
 
   .center {
     text-align: center;
   }
 
+<<<<<<< HEAD
   th {
     text-align: center;
   }
@@ -91,6 +111,8 @@
   width: 10%
 }
 
+=======
+>>>>>>> de09abed45384dcf40c3069957f556909fafc583
 </style>
 
 {% endblock %}
