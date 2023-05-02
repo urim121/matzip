@@ -30,6 +30,9 @@ urlpatterns = [
     path('article/detail/<int:id>/', views.detail),
     path('article/update/<int:id>/', views.update),
     path('article/delete/<int:id>/', views.delete),
+    path('contact/', views.contact),
+    path('page/', views.page),
+
 
     path('insert/', views.insert),
     path('index1/', views.main),

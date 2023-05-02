@@ -185,3 +185,16 @@ def article_list(request):
         
     context = {'article_list': article_list, 'category': category}
     return render(request, 'article_list.html', context)
+
+def contact(request):
+    if request.method == 'POST':
+      email = request.POST.get('email')
+      comment = request.POST.get('comment')
+      #         발신자주소, 수신자주소, 메시지
+      send_mail('ggoreb.kim@gmail.com', email, comment)
+      return render(request, 'contact_success.html')
+
+    return render(request, 'contact.html')
+
+def page(request):
+   return render(request, 'page.html')

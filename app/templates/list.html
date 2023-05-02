@@ -33,13 +33,11 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
-  <br>
-  <br>
-  <div class="text-center">
-    <button class="btn btn-primary center" onclick='location="/article/write/"'>
-      글쓰기
-    </button>
+    <div class="text-center">
+      <button class="btn btn-primary center" onclick='location="/article/write/"'>
+        글쓰기
+      </button>
+    </div>
   </div>
 </div>
 
@@ -85,6 +83,7 @@
 
   th {
     text-align: center;
+    pointer-events: none;
   }
   .form-control {
     width: 10%
@@ -100,9 +99,17 @@
     float: right;
     background-color: gray;
     font-weight: bold;
-    margin-right: 200px;
   }
 
+  .btn-primary:hover {
+    background-color: darkgray;
+  }
+
+  .btn-primary:active,
+  .btn-primary:focus {
+  background-color: darkgray !important;
+  outline: none !important;
+  }
 </style>
 
 {% endblock %}
