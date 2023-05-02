@@ -1,15 +1,62 @@
-from django.shortcuts import render, redirect as r
+from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.utils import timezone
-from .models import restaurant, User, Article
+from .models import restaurant, User, Article, restaurant
 from django.forms.models import model_to_dict
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 def main(request):
     return render(
         request,
-        'mapmain.html',
+        'map.html',
         {}
     )
+
+def insert(request):
+    restaurant.objects.create(category='한식',name='조치원집',location='세종특별자치시 조치원읍 정리 24-1 ',number='044 -865 -3021',long=127.300569,lat=36.6002684)
+    c = restaurant(category='한식',name='한방족발 곰나루',location='세종특별자치시 조치원읍 정리 29-2 ',number='044 -865 -0948',long=127.299651,lat=36.6000454)
+    c.save()
+    restaurant(category='한식',name='내집닭갈비',location='세종특별자치시 금남면 용포리 193-26',number='044 -865 -3021',long=127.281676,lat=36.4657734).save()
+    restaurant(category='일식',name='어순이와돈돌이',location='세종특별자치시 조치원읍 원리 15-4',number='044 -865 -6661',long=127.297339,lat=36.5945092).save()
+    restaurant(category='한식',name='삼거리식당',location='세종특별자치시 조치원읍 죽림리 32-8',number='044 -865 -3101',long=127.300569,lat=36.6002684).save()
+    restaurant(category='중식',name='형제반점',location='세종특별자치시 조치원읍 정리 99-3 ',number='044 -866 -6607',long=127.298225,lat=36.5983098).save()
+    restaurant(category='한식',name='삼흥식당',location='세종특별자치시 조치원읍 원리 141-6 (1층)',number='044 -867 -5311',long=127.29677,lat=36.6006563).save()
+    return HttpResponse('데이터 입력 완료')
+
+def show(request):
+    res=restaurant.objects.all()
+    return render(request, 'app/map.html', {'data':res})
+
+
+@xframe_options_exempt
+def kor(request):
+    res=restaurant.objects.filter(category='한식')
+    return render(request, 'category_kor.html', {'data':res})
+
+@xframe_options_exempt
+def chi(request):
+    res=restaurant.objects.filter(category='중식')
+    return render(request, 'category_chi.html', {'data':res})
+
+@xframe_options_exempt
+def jap(request):
+    res=restaurant.objects.filter(category='일식')
+    return render(request, 'category_jap.html', {'data':res})
+
+@xframe_options_exempt
+def wes(request):
+    res=restaurant.objects.filter(category='양식')
+    return render(request, 'category_wes.html', {'data':res})
+
+@xframe_options_exempt
+def bun(request):
+    res=restaurant.objects.filter(category='분식')
+    return render(request, 'category_bun.html', {'data':res})
+
+@xframe_options_exempt
+def caf(request):
+    res=restaurant.objects.filter(category='카페')
+    return render(request, 'category_caf.html', {'data':res})
+
 
 def category_data(request):
     category = request.GET.get('category')

@@ -4,8 +4,10 @@ class restaurant(models.Model):
     id=models.IntegerField(primary_key=True)
     name=models.CharField(max_length=10)
     category=models.CharField(max_length=10)
-    location_long=models.FloatField()
-    location_lat=models.FloatField()
+    long=models.FloatField()
+    lat=models.FloatField()
+    number = models.CharField(max_length=100,null=True)
+    location = models.CharField(max_length=100,null=True)
 
     class Meta:
         db_table='restaurant'

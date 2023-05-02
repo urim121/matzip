@@ -1,0 +1,9 @@
+<body>
+    
+    {% for item in data %}
+    {% if item.category == '일식' %}
+    <br>{{ item.category }}<br>{{ item.name }}<br>{{ item.location }}<br>{{ item.number }}<br><hr><br>
+    {% endif %}
+    {% endfor %}
+
+</body>
