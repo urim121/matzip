@@ -4,15 +4,49 @@
   <title>Matzip</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="https://genfavicon.com/tmp/icon_bedb37aff44beca09c748d6f2a0653ed.ico">
+  <link rel="shortcut icon" href="/static/icon.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
+    @font-face {
+      font-family: 'NeoDunggeunmo';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    }
+
+    * {
+      font-family: NeoDunggeunmo;
+    }
+
+    .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+      background-color: #9799dd;
+    }
+
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      background-color: #9799dd;
+      border-color: #9799dd;
+    }
+    
+    .navbar-brand { 
+      clear: left;
+      padding-left: 25px;
+      padding-bottom: 20px;
+      height: auto;
+    }
+
+    .navbar-inverse .navbar-nav>li>a {
+      color: #202135;
+    }
+
+    .nav>li>a {
+      padding-top: 25px;
+      font-size: 17px;
+      /* font-weight: bold; */
     }
     
     /* Add a gray background color and some padding to the footer */
@@ -33,12 +67,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="/main/">Matzip</a>
+      <a class="navbar-brand" href="/page/"><img src="/static/food.png" alt="logo" width="40px"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+        <li {% if request.path == '/map/' %}class="active"{% endif %}><a href="/main/">지도</a></li>
         <li {% if request.path == '/article/list/' %}class="active"{% endif %}><a href="/article/list/">게시판</a></li>
-        <li {% if request.path == '/map/' %}class="active"{% endif %}><a href="/map/">지도</a></li>
         <li {% if request.path == '/contact/' %}class="active"{% endif %}><a href="/contact/">Contact</a></li>
       </ul>
       </ul>
@@ -65,9 +99,6 @@
 {% block content %}
 {% endblock %}
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
 
 </body>
 </html>

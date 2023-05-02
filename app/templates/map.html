@@ -17,6 +17,10 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
 #menu_wrap .option{text-align: center;}
 #menu_wrap .option p {margin:10px 0;}  
 #menu_wrap .option button {margin-left:5px;}
+element.style{
+  display:inline-block;
+  margin: auto;
+}
 
 
 .radius_border{border:1px solid #919191;border-radius:5px;box-sizing: content-box;}     
@@ -89,12 +93,12 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
         <span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
     </div>
         <ul id="category">
-            <button onclick="showWebsites(0)">한식</button>
-            <button onclick="showWebsites(1)">중식</button>
-            <button onclick="showWebsites(2)">일식</button>
-            <button onclick="showWebsites(3)">양식</button>
-            <button onclick="showWebsites(4)">분식</button>
-            <button onclick="showWebsites(5)">카페</button>
+            <li><button onclick="showWebsites(0)">한식</button></li>
+            <li><button onclick="showWebsites(1)">중식</button></li>
+            <li><button onclick="showWebsites(2)">일식</button></li>
+            <li><button onclick="showWebsites(3)">양식</button></li>
+            <li><button onclick="showWebsites(4)">분식</button></li>
+            <li><button onclick="showWebsites(5)">카페</button></li>
         </ul>
     <div id="menu_wrap" class="bg_white">
         <div id="websites-container"></div>
