@@ -1,25 +1,75 @@
 {% extends 'home.html' %}
 {% block content %}
 
-<div class="jumbotron">
-  <div class="container text-center">
-    <form method="post" action="/signup/">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="text" class="form-control" id="email" name="email">
-      </div>
-      <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd" name="pwd">
-      </div>
-      <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" class="form-control" id="name" name="name">
-      </div>
-      <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
-    </form>
-  </div>
+
+<div class="container text-center">
+  <form method="post" action="/signup/">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="email">Email: &nbsp;&nbsp;</label>
+      <input type="text" class="form-control" id="email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" name="pwd">
+    </div>
+    <div class="form-group">
+      <label for="name">Name: &nbsp;&nbsp;&nbsp;</label>
+      <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
+  </form>
 </div>
+
+<style>
+
+  label{
+    font-weight: lighter;
+  }
+
+  .form-group{
+    justify-content: center;
+  }
+
+  .form-control{
+    width: 400px;
+    display: inline-block;
+  }
+
+  .btn-block{
+    width: 200px;
+    margin-left: 60px;
+  }
+
+  .btn{
+    display: inline;
+    background-color: gray;
+    border-color: gray;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    border-width: 0px;
+    margin-top: 20px;
+  }
+
+  .btn:hover{
+    background-color: darkgray;
+    border-color: darkgray;
+  }
+
+  .btn:active,
+  .btn:focus{
+    background-color: darkgray !important;
+    border-color: darkgray !important;
+    outline: none !important;
+  }
+
+
+  .container{
+    margin-top: 200px;
+  }
+
+</style>
+
 
 {% endblock %}
