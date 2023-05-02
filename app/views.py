@@ -86,10 +86,12 @@ def signin(request):
     email = request.POST.get('email')
     pwd = request.POST.get('pwd')
     
+    
     try:
       # select * from user where email=? and pwd=?
       user = User.objects.get(email=email, pwd=pwd)
       request.session['email'] = email
+      request.session['name'] = user.name
       return render(request, 'signin_success.html')
     except:
       return render(request, 'signin_fail.html')
@@ -187,14 +189,31 @@ def article_list(request):
     return render(request, 'article_list.html', context)
 
 def contact(request):
-    if request.method == 'POST':
-      email = request.POST.get('email')
-      comment = request.POST.get('comment')
-      #         발신자주소, 수신자주소, 메시지
-      send_mail('ggoreb.kim@gmail.com', email, comment)
-      return render(request, 'contact_success.html')
-
-    return render(request, 'contact.html')
+   return render(request, 'contact.html')
 
 def page(request):
    return render(request, 'page.html')
+
+def data_list(request):
+    category = request.GET.get('category')
+    res = restaurant.objects.filter(category=category)
+    data = {
+        'type': 'FeatureCollection',
+        'features': []
+    }
+    for my_model in res:
+        feature = {
+            'type': 'Feature',
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [my_model.long, my_model.lat]
+            },
+            'properties': {
+                'name': my_model.name,
+                'number': my_model.number,
+                'category':my_model.category,
+                'location':my_model.location
+            }
+        }
+        data['features'].append(feature)
+    return JsonResponse(data)

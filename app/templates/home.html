@@ -43,17 +43,12 @@
       color: #202135;
     }
 
-    .nav>li>a {
+    .nav>li>a{
       padding-top: 25px;
       font-size: 17px;
-      /* font-weight: bold; */
     }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
+  
+
   </style>
 </head>
 <body>
@@ -80,8 +75,8 @@
         {% if request.session.email %}
         <li>
           <a href="/signout/">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-            {{ request.session.email }} 님 반갑습니다.
+            {{ request.session.name }} 님 반갑습니다.
+              <span class="glyphicon glyphicon-log-out"></span> Logout
           </a>
         </li>
         {% else %}

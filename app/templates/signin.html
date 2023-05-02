@@ -1,7 +1,7 @@
 {% extends 'home.html' %}
 {% block content %}
 
-<div class="jumbotron">
+<body>
   <div class="container text-center">
     <form method="post" action="/signin/">
       {% csrf_token %}
@@ -17,7 +17,8 @@
       <button type='button' style="background-color: orange;"  onclick='location="/signup/"'>Sign up</button>
     </form>
   </div>
-</div>
+</body>
+
 
 
 <style>
@@ -33,6 +34,13 @@
 
   }
 
+  body{
+    background-color: #eee;
+  }
+
+  .container{
+    margin-top: 150px;
+  }
 </style>
 
 

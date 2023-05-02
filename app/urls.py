@@ -12,6 +12,7 @@ urlpatterns = [
     path('wes/', views.wes),
     path('caf/', views.caf),
     path('jap/', views.jap),
+    path('json/', views.data_list),
     
 
 ]
