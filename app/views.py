@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import restaurant, User, Article, restaurant
 from django.forms.models import model_to_dict
 from django.views.decorators.clickjacking import xframe_options_exempt
+import hashlib
 
 def main(request):
     return render(
@@ -68,28 +69,34 @@ def category_data(request):
 
     return JsonResponse(result, safe=False)
 
+#회원가입
 def signup(request):
   if request.method == 'POST':
-    # 회원정보 저장
     email = request.POST.get('email')
     name = request.POST.get('name')
     pwd = request.POST.get('pwd')
     user = User(email=email, name=name, pwd=pwd)
+    user.pwd = encrypt(pwd)
     user.save()
     return HttpResponseRedirect('/main/')
 
   return render(request, 'signup.html')
 
+#비밀번호 암호화
+def encrypt(pwd):
+  m = hashlib.sha256()
+  m.update(pwd.encode('utf-8'))
+  new_pwd = m.hexdigest()
+  return new_pwd
+
+#로그인
 def signin(request):
   if request.method == 'POST':
-    # 회원정보 조회
     email = request.POST.get('email')
     pwd = request.POST.get('pwd')
     
-    
     try:
-      # select * from user where email=? and pwd=?
-      user = User.objects.get(email=email, pwd=pwd)
+      user = User.objects.get(email=email, pwd=encrypt(pwd))
       request.session['email'] = email
       request.session['name'] = user.name
       return render(request, 'signin_success.html')
@@ -98,12 +105,14 @@ def signin(request):
 
   return render(request, 'signin.html')
 
+#로그아웃
 def signout(request):
   del request.session['email']  # 개별 삭제
   request.session.flush()  # 전체 삭제
 
   return HttpResponseRedirect('/main/')
 
+#게시판
 def write(request):
   if request.method == 'POST':
 
@@ -113,9 +122,7 @@ def write(request):
     
     try:
       email = request.session['email']
-      # select * from user where email = ?
       user = User.objects.get(email=email)
-      # insert into article (title, content, user_id) values (?, ?, ?)
       article = Article(category=category , title=title, content=content, user=user)
       article.save()
       return render(request, 'write_success.html')
@@ -125,7 +132,6 @@ def write(request):
   return render(request, 'write.html')
 
 def list(request):
-  # select * from article order by id desc
   article_list = Article.objects.order_by('-id')
   context = { 
     'article_list' : article_list 
@@ -133,7 +139,6 @@ def list(request):
   return render(request, 'list.html', context)
 
 def detail(request, id):
-  # select * from article where id = ?
   article = Article.objects.get(id=id)
   context = { 
     'article' : article 
@@ -141,7 +146,6 @@ def detail(request, id):
   return render(request, 'detail.html', context)
 
 def update(request, id):
-  # select * from article where id = ?
   article = Article.objects.get(id=id)
 
   if request.method == 'POST':
@@ -150,7 +154,6 @@ def update(request, id):
     category  = request.POST.get('category')
     
     try:
-      # update article set title = ?, content = ? where id = ?
       article.category = category 
       article.title = title
       article.content = content
@@ -166,7 +169,6 @@ def update(request, id):
 
 def delete(request, id):
   try:
-    # select * from article where id = ?
     article = Article.objects.get(id=id)
     article.delete()
     return render(request, 'delete_success.html')
@@ -174,7 +176,7 @@ def delete(request, id):
     return render(request, 'delete_fail.html')
   
 def article_list(request):
-    category = request.GET.get('category', 'all')  # 기본값은 'all'
+    category = request.GET.get('category', 'all')  
     
     if category == 'all':
         article_list = Article.objects.all()
@@ -183,7 +185,7 @@ def article_list(request):
     elif category == '2':
         article_list = Article.objects.filter(category='2')
     else:
-        article_list = Article.objects.all()  # 잘못된 쿼리 파라미터일 경우 기본값으로 모든 게시물 보여줌
+        article_list = Article.objects.all()
         
     context = {'article_list': article_list, 'category': category}
     return render(request, 'article_list.html', context)
