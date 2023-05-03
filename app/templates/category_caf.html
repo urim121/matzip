@@ -7,14 +7,18 @@
   * {
     font-family: NeoDunggeunmo;
   }
+  
+  li::marker{content:'🕿 '}
+
 </style>
 
-<body font-family: 'NeoDunggeunmo';>
-    
-    {% for item in data %}
-    {% if item.category == '카페' %}
-    <br>{{ item.category }}<br>{{ item.name }}<br>{{ item.location }}<br>{{ item.number }}<br><hr><br>
-    {% endif %}
-    {% endfor %}
+<body>
+  
+  {% for item in data %}
+  {% if item.category == '카페' %}
+  <p style="font-size: 10px; color: gray;">{{ item.category }}</p><br>{{ item.name }}<br>
+  <p style="font-size: 10px;">{{ item.location }}</p><li>{{ item.number }}</li><br><hr>
+  {% endif %}
+  {% endfor %}
 
 </body>

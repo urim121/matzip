@@ -71,43 +71,45 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="/page/"><img class="hover-zoom" src="/static/food.png" alt="logo" width="40px" style="margin-right: 20px;"></a>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="/page/"><img class="hover-zoom" src="/static/food.png" alt="logo" width="40px" style="margin-right: 20px;"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li {% if request.path == '/map/' %}class="active"{% endif %}><a href="{% if request.session.email %}/main/{% else %}/signin/?next=/map/{% endif %}" class="hover-zoom2" style="margin-right: 20px;">지도</a></li>
+          <li {% if request.path == '/article/list/' %}class="active"{% endif %}><a href="{% if request.session.email %}/article/list/{% else %}/signin/?next=/article/list/{% endif %}" class="hover-zoom2" style="margin-right: 20px;">게시판</a></li>
+          <li {% if request.path == '/contact/' %}class="active"{% endif %}><a href="/contact/" class="hover-zoom2" style="margin-right: 20px;">Contact</a></li>
+        </ul>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {% if request.session.email %}
+          <li>
+            <a href="/signout/">
+              {{ request.session.name }} 님 반갑습니다.
+                <span class="glyphicon glyphicon-log-out"></span> Logout
+            </a>
+          </li>
+          {% else %}
+          <li>
+            <a href="/signin/">
+              <span class="glyphicon glyphicon-log-in"></span> Login
+            </a>
+          </li>
+          {% endif %}
+        </ul> 
+      </div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li {% if request.path == '/map/' %}class="active"{% endif %}><a href="/main/" class="hover-zoom2" style="margin-right: 20px;">지도</a></li>
-        <li {% if request.path == '/article/list/' %}class="active"{% endif %}><a href="/article/list/" class="hover-zoom2" style="margin-right: 20px;">게시판</a></li>
-        <li {% if request.path == '/contact/' %}class="active"{% endif %}><a href="/contact/" class="hover-zoom2" style="margin-right: 20px;">Contact</a></li>
-      </ul>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {% if request.session.email %}
-        <li>
-          <a href="/signout/">
-            {{ request.session.name }} 님 반갑습니다.
-              <span class="glyphicon glyphicon-log-out"></span> Logout
-          </a>
-        </li>
-        {% else %}
-        <li>
-          <a href="/signin/">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-          </a>
-        </li>
-        {% endif %}
-      </ul> 
-    </div>
-  </div>
-</nav>
+  </nav>
+
+</script>
 
 {% block content %}
 {% endblock %}

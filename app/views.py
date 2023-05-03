@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from .models import restaurant, User, Article, restaurant
 from django.forms.models import model_to_dict
@@ -114,9 +114,11 @@ def signin(request):
       user = User.objects.get(email=email, pwd=encrypt(pwd))
       request.session['email'] = email
       request.session['name'] = user.name
-      return render(request, 'signin_success.html')
+      return render(request, 'page.html')
     except:
-      return render(request, 'signin_fail.html')
+      error_msg = '이메일과 비밀번호를 확인하세요.'
+      return render(request, 'signin.html', {'error_msg': error_msg})
+
 
   return render(request, 'signin.html')
 
@@ -125,7 +127,7 @@ def signout(request):
   del request.session['email']  # 개별 삭제
   request.session.flush()  # 전체 삭제
 
-  return HttpResponseRedirect('/main/')
+  return HttpResponseRedirect('/page/')
 
 #게시판
 def write(request):
@@ -140,8 +142,9 @@ def write(request):
       user = User.objects.get(email=email)
       article = Article(category=category , title=title, content=content, user=user)
       article.save()
-      return render(request, 'write_success.html')
-    except:
+      return redirect('/article/list/')
+    except Exception as e:
+      print(e)
       return render(request, 'write_fail.html')
 
   return render(request, 'write.html')
