@@ -71,16 +71,31 @@ def category_data(request):
 
 #회원가입
 def signup(request):
-  if request.method == 'POST':
-    email = request.POST.get('email')
-    name = request.POST.get('name')
-    pwd = request.POST.get('pwd')
-    user = User(email=email, name=name, pwd=pwd)
-    user.pwd = encrypt(pwd)
-    user.save()
-    return HttpResponseRedirect('/main/')
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        name = request.POST.get('name')
+        pwd = request.POST.get('pwd')
+        pwd_check = request.POST.get('pwd_check')
 
-  return render(request, 'signup.html')
+        # check if email already exists
+        if User.objects.filter(email=email).exists():
+            error_msg = '이미 가입된 이메일입니다.'
+            return render(request, 'signup.html', {'error_msg': error_msg})
+
+        # check if passwords match
+        if pwd != pwd_check:
+            error_msg = '비밀번호가 일치하지 않습니다.'
+            return render(request, 'signup.html', {'error_msg': error_msg})
+
+        user = User(email=email, name=name, pwd=pwd)
+        user.pwd = encrypt(pwd)
+
+        user.save()
+        success_msg = '회원가입이 완료되었습니다. 환영합니다!'
+        return render(request, 'signin.html', {'success_msg': success_msg})
+
+    return render(request, 'signup.html')
+
 
 #비밀번호 암호화
 def encrypt(pwd):
