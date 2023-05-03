@@ -6,6 +6,11 @@
     <form method="post" action="/signin/">
       <h3>로그인</h3>
       <br><br>
+      {% if error_msg %}
+        <div class="alert alert-danger" role="alert" style="width: 400px; display: inline-block;">
+            {{ error_msg }}
+        </div>
+      {% endif %}      
       {% csrf_token %}
       <div class="form-group">
         <label for="email"></label>
@@ -54,7 +59,7 @@
   }
 
   .container{
-    margin-top: 200px;
+    margin-top: 150px;
   }
 
   #pwd.form-control{
