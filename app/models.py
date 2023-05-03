@@ -17,6 +17,7 @@ class User(models.Model):
   email = models.CharField(max_length=20)
   name = models.CharField(max_length=20)
   pwd = models.CharField(max_length=20)
+  pwd = models.CharField(max_length=20,null=True)
 
 #게시판
 class Article(models.Model):
